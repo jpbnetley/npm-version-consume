@@ -1,0 +1,61 @@
+name: build-production
+on:
+  push:
+    branches: 
+      - main
+
+env:
+  node_version: 22
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  build:
+    name: Build and publish
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      packages: read
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Create npmrc file
+      run:  echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
+
+    - name: Set up Node.js ${{ env.node_version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.node_version }}
+        cache: 'npm'
+        cache-dependency-path: package-lock.json
+    
+    - name: Install dependencies
+      run: npm ci
+
+    - name: update @jpbnetley/npm-version-release to latest master
+      run: npm i @jpbnetley/npm-version-release@latest
+    
+    - name: Check types
+      run: npm run tsc:check
+    
+    - name: Build
+      run: npm run build
+
+    - name: Setup git user info
+      run: | 
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+    - name: Commit package.json version changes
+      run: | 
+        git add package.json package-lock.json
+        git commit -m "chore: update dependencies [skip ci]"
+        git push origin HEAD:main
+
+    - name: Merge master into dev with pull request
+      id: merge_dev
+      run: gh pr create --base dev --head main --title "Merge main into dev" --body "Merging main into dev" --assignee ${{ github.actor }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
