@@ -13,13 +13,13 @@
     "dev": "tsc -w & node --watch dist/index.js",
     "tsc:check": "tsc --noEmit"
   },
-  "author": "",
+  "author": "Jonathan Netley",
   "license": "ISC",
   "description": "",
   "devDependencies": {
     "typescript": "5.8.3"
   },
   "dependencies": {
-    "@jpbnetley/npm-version-release": "^1.1.1"
+    "@jpbnetley/npm-version-release": "^1.1.2-dev.1"
   }
 }
