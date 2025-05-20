@@ -1,1 +1,3 @@
-console.log('faking')
+import {logBackend} from '@jpbnetley/npm-version-release'
+
+logBackend("I am fullstack now@!")
