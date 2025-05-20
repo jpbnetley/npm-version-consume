@@ -1,0 +1,1 @@
+import {} from '@jpbnetley/npm-version-release'
