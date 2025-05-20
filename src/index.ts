@@ -1,1 +1,1 @@
-import {} from '@jpbnetley/npm-version-release'
+console.log('faking')

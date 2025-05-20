@@ -20,11 +20,6 @@
     "typescript": "5.8.3"
   },
   "dependencies": {
-    "@jpbnetley/npm-version-release": "^1.0.1"
-  },
-  "exports": {
-    ".": {
-      "import": "./dist/index.js"
-    }
+    "@jpbnetley/npm-version-release": "1.0.2-dev.1"
   }
 }
