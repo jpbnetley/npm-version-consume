@@ -20,6 +20,6 @@
     "typescript": "5.8.3"
   },
   "dependencies": {
-    "@jpbnetley/npm-version-release": "^1.0.2-dev.2"
+    "@jpbnetley/npm-version-release": "^1.1.0"
   }
 }
